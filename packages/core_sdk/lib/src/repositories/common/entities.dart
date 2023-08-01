@@ -1,0 +1,1 @@
+//part 'entities.g.dart';

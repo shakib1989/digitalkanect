@@ -1,0 +1,41 @@
+{
+    "@@locale": "en",
+    "@@locale": "en",
+    "counterAppBarTitle": "Counter",
+    "@counterAppBarTitle": {
+        "description": "Text shown in the AppBar of the Counter Page"
+    },
+    "appName":"Dating",
+
+    "dashboardPleaseRefreshTryAgain":"Please press refresh to reload try again",
+    "dashboardOldData":"Old Data is being shown. Please turn on internet and press refresh button for latest results.",
+
+
+    "initCompleted": "Initializing Completed",
+    "initPleaseWait": "Initializing please wait...",
+    "imageViewTitle": "Image",
+
+    "appInitializing": "App Initializing...",
+    "availableBalance": "Available Balance",
+    "anonymousLoginDisabled":"Anonymous auth hasn't been enabled for this project.",
+    "chat":"Chat",
+    "cancel":"Cancel",
+    "balanceTitle":"Balance",
+    "earningsTitle":"Earnings",
+    "selectPlan":"Select your top up plan",
+    "messages":"Messages",
+    "videoCall":"Video Call",
+    "voiceCall":"Voice Call",
+    "continueNext":"Continue",
+    "home":"Home",
+    "favorite":"Favorite",
+    "next":"Next",
+    "noInternet":"No Internet",
+    "noInternetConnection":"No Internet. Please connect Internet to continue.",
+    "online":"Online",
+    "offline":"Offline",
+    "profile":"Profile",
+    "retry":"Retry",
+    "turnOnInternet":"Please connect to the Internet to continue.",
+    "unknownError":"An unknown error has occurred"
+}
