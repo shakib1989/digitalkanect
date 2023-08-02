@@ -19,7 +19,7 @@ class InitManagerCubit extends Cubit<InitState> {
   List<List<BaseTaskCubit>> tasks = [
     [InitCoreSdkTaskCubit()],
     [InitDatingSdkTaskCubit()],
-    // [InternetCheckTaskCubit()],
+    [InternetCheckTaskCubit()],
     [LoadMatchUsersServiceTaskCubit()],
     [LoadBalanceTaskCubit()],
     [LoadSubscriptionTaskCubit()],
@@ -30,7 +30,7 @@ class InitManagerCubit extends Cubit<InitState> {
     'Checking Application Resources...',
     'Initializing Core Sdk...',
     'Initializing Dating Sdk...',
-    //  'Internet Connection Check...',
+    'Internet Connection Check...',
     'Checking Login Status..',
     'Checking Balance Status..',
     'Checking Subscription Status..',
