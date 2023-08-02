@@ -21,7 +21,7 @@ class DashboardBottomNavigation extends StatelessWidget {
       builder: (context, state) {
         return BottomNavigationBar(
           currentIndex: state.selectedIndex,
-          elevation: 1,
+          elevation: 0.0,
           showSelectedLabels: true,
           showUnselectedLabels: true,
           selectedFontSize: StyleDimens.bodyMedium,

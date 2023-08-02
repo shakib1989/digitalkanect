@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dating_sdk/data/network/dating/default_imports.dart';
 import 'package:digitalkanect/assets/images/image_assets.dart';
 import 'package:digitalkanect/assets/images/svg_assets.dart';
@@ -60,18 +61,19 @@ class MatchedUserView extends StatelessWidget {
           height: 40.w,
           margin: EdgeInsets.only(top: 25.h),
           padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 3.w),
-          child: data.favorite ?
-            SvgPicture.asset(SvgAssets.heartSelected)
-           : SvgPicture.asset(SvgAssets.heart),
-
+          child: data.favorite
+              ? SvgPicture.asset(SvgAssets.heartSelected)
+              : SvgPicture.asset(SvgAssets.heart),
         ),
         Container(
           width: 40.w,
           height: 40.w,
           margin: EdgeInsets.only(top: 25.h, bottom: 23.h),
           padding: EdgeInsets.all(6.w),
-          child: SvgPicture.asset(SvgAssets.chat,
-          fit: BoxFit.fitHeight,),
+          child: SvgPicture.asset(
+            SvgAssets.chat,
+            fit: BoxFit.fitHeight,
+          ),
         ),
       ],
     );
@@ -106,6 +108,17 @@ class MatchedUserView extends StatelessWidget {
   }
 
   Widget _buildContent(BuildContext context) {
+    return CachedNetworkImage(
+      imageUrl: data.imageUrl,
+      progressIndicatorBuilder: (context, url, downloadProgress) => Loading(),
+      errorWidget: (_, __, ___) => Image.asset(ImageAssets.noImageFound),
+      imageBuilder: (context, provider){
+        return _buildContainer(context, provider);
+      },
+    );
+  }
+
+  Widget _buildContainer(BuildContext context, ImageProvider<Object> provider) {
     return Container(
       width: double.maxFinite,
       height: double.maxFinite,
@@ -115,12 +128,7 @@ class MatchedUserView extends StatelessWidget {
         borderRadius: BorderRadius.circular(StyleDimens.radiusLarge),
         image: DecorationImage(
           fit: BoxFit.fill,
-          image: Image.network(
-            data.imageUrl,
-            loadingBuilder: (_, __, ___) => const Loading(),
-            errorBuilder: (_, __, ___) => Image.asset(ImageAssets.noImageFound),
-            fit: BoxFit.fitHeight,
-          ).image,
+          image: provider,
         ),
       ),
       child: Row(

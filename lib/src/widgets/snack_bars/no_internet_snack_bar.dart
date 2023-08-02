@@ -6,6 +6,7 @@ class NoInternetSnackBar extends SnackBar {
   NoInternetSnackBar({
     super.key,
   }) : super(
+          duration: const Duration(seconds: 2),
           backgroundColor:
               Theme.of(ContextHolder.currentContext).colorScheme.error,
           content: Text(ContextHolder.currentContext.l10n.turnOnInternet),

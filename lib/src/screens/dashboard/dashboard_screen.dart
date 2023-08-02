@@ -65,9 +65,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 },
               ),
             ),
+            const DashboardBottomNavigation(),
           ],
         ),
-        bottomNavigationBar: const DashboardBottomNavigation(),
       ),
     );
   }

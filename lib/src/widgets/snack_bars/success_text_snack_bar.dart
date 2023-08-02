@@ -7,6 +7,7 @@ class SuccessTextSnackBar extends SnackBar {
     super.key,
     required String message,
   }) : super(
+          duration: const Duration(seconds: 2),
           behavior: SnackBarBehavior.floating,
           backgroundColor:
               Theme.of(ContextHolder.currentContext).colorScheme.primary,

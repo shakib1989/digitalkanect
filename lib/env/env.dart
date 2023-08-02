@@ -23,9 +23,11 @@ abstract class Env {
       DeviceOrientation.portraitDown,
     ]);
     startApp();
+    InitManagerCubit.shared.run();
   }
 
   Future<void> startApp() async {
+
     bootstrap(() => const Application());
   }
 }

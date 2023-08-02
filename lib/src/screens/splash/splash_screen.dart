@@ -8,52 +8,96 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:styles/styles.dart';
 
-class SplashScreen extends StatelessWidget {
+class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen>
+    with TickerProviderStateMixin {
+  late AnimationController addToCartPopUpAnimationController;
+  final logo = SizedBox(
+    width: 100.w,
+    height: 150.h,
+    child: SvgPicture.asset(SvgAssets.logo),
+  );
+
+  @override
+  void initState() {
+    super.initState();
+    addToCartPopUpAnimationController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 3000));
+
     InitManagerCubit.shared.run();
-    return Scaffold(
-      body: SizedBox(
-        width: double.maxFinite,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
+    addToCartPopUpAnimationController.forward();
+  }
+
+  @override
+  void dispose() {
+    addToCartPopUpAnimationController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocListener<InitManagerCubit, InitState>(
+      bloc: InitManagerCubit.shared,
+      listenWhen: (prev, cur) {
+        return cur.phase == InitPhase.completed;
+      },
+      listener: (context, state) async {
+        if (state.phase == InitPhase.completed) {
+          do {
+            await Future.delayed(const Duration(milliseconds: 500));
+          } while (addToCartPopUpAnimationController.isAnimating);
+
+          DashboardScreen.start(context);
+        }
+      },
+      child: Scaffold(
+        body: SizedBox(
+          width: double.maxFinite,
+          child: _buildAnimatedContent(),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildContent() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        logo,
+        Padding(
+          padding: EdgeInsets.symmetric(vertical: 20.h),
+          child: ThemeTexts.primary.titleMedium(
+            context: context,
+            text: context.l10n.appName,
+          ),
+        ),
+        ThemeTexts.onBackground.bodyMedium(
+          context: context,
+          text: context.l10n.appInitializing,
+        ),
+        SizedBox(height: 100.h),
+      ],
+    );
+  }
+
+  Widget _buildAnimatedContent() {
+    return SlideTransition(
+      position: Tween<Offset>(
+        begin: const Offset(0, 1),
+        end: Offset.zero,
+      ).animate(addToCartPopUpAnimationController),
+      child: Align(
+        alignment: Alignment.bottomCenter,
+        child: Wrap(
           children: [
-            SizedBox(
-              width: 100.w,
-              height: 150.h,
-              child: SvgPicture.asset(SvgAssets.logo),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 20.h),
-              child: ThemeTexts.primary.titleMedium(
-                context: context,
-                text: context.l10n.appName,
-              ),
-            ),
-            BlocBuilder<InitManagerCubit, InitState>(
-              bloc: InitManagerCubit.shared,
-              builder: (context, state) {
-                if (state.phase == InitPhase.processing) {
-                  return ThemeTexts.onBackground.titleMedium(
-                    context: context,
-                    text: context.l10n.appInitializing,
-                  );
-                }
-                return ThemeStadiumButton.primary(
-                  context: context,
-                  onPressed: () {
-                    DashboardScreen.start(context);
-                  },
-                  child: ThemeTexts.onPrimary.labelMedium(
-                    context: context,
-                    text: context.l10n.next,
-                  ),
-                );
-              },
-            ),
+            _buildContent(),
           ],
         ),
       ),
